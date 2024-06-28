@@ -25,7 +25,6 @@ public class Dispositivi {
     @Enumerated(EnumType.STRING)
     private StatoDispositivo stato;
 
-
     @ManyToOne
     @JoinColumn(name = "dipendente_id")
     private Dipendente dipendente;
