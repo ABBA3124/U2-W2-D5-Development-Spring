@@ -14,9 +14,9 @@ public class CloudinaryConfig {
 
     @Bean
     public Cloudinary uploader
-            (@Value("${cloudinary.name}") String name,
-             @Value("${cloudinary.secret}") String secret,
-             @Value("${cloudinary.key}") String key) {
+            (@Value("${CLOUDINARY_NAME}") String name,
+             @Value("${CLOUDINARY_SECRET}") String secret,
+             @Value("${CLOUDINARY_KEY}") String key) {
         Map<String, String> configuration = new HashMap<>();
         configuration.put("cloud_name", name);
         configuration.put("api_key", key);
