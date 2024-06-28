@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/dipendenti")
+@RequestMapping("/dipendente")
 public class DipendenteController {
 
     @Autowired
