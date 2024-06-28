@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +45,16 @@ public class DipendenteController {
     public ResponseEntity<Void> deleteDipendente(@PathVariable UUID id) {
         dipendenteService.deleteDipendente(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/upload")
+    public ResponseEntity<Dipendente> uploadProfileImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) {
+        try {
+            Dipendente updatedDipendente = dipendenteService.uploadProfileImage(id, file);
+            return ResponseEntity.ok(updatedDipendente);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
 
