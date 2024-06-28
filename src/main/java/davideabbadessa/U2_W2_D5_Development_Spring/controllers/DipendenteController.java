@@ -44,6 +44,8 @@ public class DipendenteController {
         dipendenteService.deleteDipendente(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }
 
 

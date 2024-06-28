@@ -45,4 +45,10 @@ public class DispositivoController {
         dispositivoService.deleteDispositivo(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{dispositivoId}/assegna/{dipendenteId}")
+    public ResponseEntity<Dispositivi> assignDispositivo(@PathVariable UUID dispositivoId, @PathVariable UUID dipendenteId) {
+        Dispositivi dispositivo = dispositivoService.assignDispositivo(dispositivoId, dipendenteId);
+        return ResponseEntity.ok(dispositivo);
+    }
 }

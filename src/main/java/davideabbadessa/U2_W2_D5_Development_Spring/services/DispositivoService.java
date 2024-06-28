@@ -5,6 +5,7 @@ import davideabbadessa.U2_W2_D5_Development_Spring.entities.Dipendente;
 import davideabbadessa.U2_W2_D5_Development_Spring.entities.Dispositivi;
 import davideabbadessa.U2_W2_D5_Development_Spring.enums.StatoDispositivo;
 import davideabbadessa.U2_W2_D5_Development_Spring.enums.TipoDispositivo;
+import davideabbadessa.U2_W2_D5_Development_Spring.exceptions.BadRequestException;
 import davideabbadessa.U2_W2_D5_Development_Spring.exceptions.NotFoundException;
 import davideabbadessa.U2_W2_D5_Development_Spring.payloads.DispositivoDTO;
 import davideabbadessa.U2_W2_D5_Development_Spring.repositories.DipendenteRepository;
@@ -74,4 +75,21 @@ public class DispositivoService {
     public void deleteDispositivo(UUID id) {
         dispositivoRepository.deleteById(id);
     }
+
+    public Dispositivi assignDispositivo(UUID dispositivoId, UUID dipendenteId) {
+        Dispositivi dispositivo = dispositivoRepository.findById(dispositivoId)
+                .orElseThrow(() -> new NotFoundException(dispositivoId));
+        Dipendente dipendente = dipendenteRepository.findById(dipendenteId)
+                .orElseThrow(() -> new NotFoundException(dipendenteId));
+
+        if (dispositivo.getStato() != StatoDispositivo.DISPONIBILE) {
+            throw new BadRequestException("Il dispositivo non è disponibile per l'assegnazione.");
+        }
+
+        dispositivo.setDipendente(dipendente);
+        dispositivo.setStato(StatoDispositivo.ASSEGNATO);
+
+        return dispositivoRepository.save(dispositivo);
+    }
+
 }
