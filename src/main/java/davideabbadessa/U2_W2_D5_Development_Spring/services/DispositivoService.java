@@ -3,6 +3,8 @@ package davideabbadessa.U2_W2_D5_Development_Spring.services;
 
 import davideabbadessa.U2_W2_D5_Development_Spring.entities.Dipendente;
 import davideabbadessa.U2_W2_D5_Development_Spring.entities.Dispositivi;
+import davideabbadessa.U2_W2_D5_Development_Spring.enums.StatoDispositivo;
+import davideabbadessa.U2_W2_D5_Development_Spring.enums.TipoDispositivo;
 import davideabbadessa.U2_W2_D5_Development_Spring.exceptions.NotFoundException;
 import davideabbadessa.U2_W2_D5_Development_Spring.payloads.DispositivoDTO;
 import davideabbadessa.U2_W2_D5_Development_Spring.repositories.DipendenteRepository;
@@ -37,8 +39,8 @@ public class DispositivoService {
 
     public Dispositivi saveDispositivo(DispositivoDTO dispositivoDTO) {
         Dispositivi dispositivi = new Dispositivi();
-        dispositivi.setTipo(dispositivoDTO.tipo());
-        dispositivi.setStato(dispositivoDTO.stato());
+        dispositivi.setTipo(TipoDispositivo.valueOf(dispositivoDTO.tipo().toUpperCase()));
+        dispositivi.setStato(StatoDispositivo.valueOf(dispositivoDTO.stato().toUpperCase()));
 
         if (dispositivoDTO.dipendenteId() != null) {
             Dipendente dipendente = dipendenteRepository.findById(dispositivoDTO.dipendenteId())
@@ -54,8 +56,8 @@ public class DispositivoService {
         Dispositivi dispositivo = dispositivoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
 
-        dispositivo.setTipo(dispositivoDTO.tipo());
-        dispositivo.setStato(dispositivoDTO.stato());
+        dispositivo.setTipo(TipoDispositivo.valueOf(dispositivoDTO.tipo().toUpperCase()));
+        dispositivo.setStato(StatoDispositivo.valueOf(dispositivoDTO.stato().toUpperCase()));
 
         if (dispositivoDTO.dipendenteId() != null) {
             Dipendente dipendente = dipendenteRepository.findById(dispositivoDTO.dipendenteId())
